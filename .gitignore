@@ -1,0 +1,7 @@
+main
+build
+.env
+*.log
+.vscode
+.idea
+.fleet
