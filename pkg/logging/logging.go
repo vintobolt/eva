@@ -1,7 +1,7 @@
 package logging
 
 import (
-	"eva/config"
+	"eva/internal/config"
 	"os"
 
 	"go.uber.org/zap"

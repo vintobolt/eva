@@ -1,18 +1,26 @@
 package main
 
 import (
-	"eva/config"
-	"eva/logging"
-	"fmt"
+	"eva/internal/app"
+	"eva/internal/config"
+	"eva/pkg/logging"
+	"log"
 )
 
 func main() {
-	fmt.Println("EVA server starting")
-	fmt.Println("Configuring EVA server...")
-	cfg := config.GetConfig()
-	fmt.Println("EVA server configured.")
-	fmt.Println("Setting up logger...")
-	logger := logging.GetLogger()
-	fmt.Println("Logger set up.")
+	log.Println("EVA server starting")
 
+	log.Println("Configuring EVA server...")
+	cfg := config.GetConfig()
+	log.Println("EVA server configured.")
+
+	log.Println("Setting up logger...")
+	logger := logging.GetLogger()
+	log.Println("Logger set up.")
+
+	app, err := app.NewApp(cfg, &logger)
+	if err != nil {
+		logger.Fatal(err)
+	}
+	app.Run()
 }
