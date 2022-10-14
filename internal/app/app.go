@@ -3,7 +3,6 @@ package app
 import (
 	"context"
 	"eva/internal/config"
-	"eva/internal/handlers"
 	"eva/pkg/logging"
 	"net/http"
 	"os"
@@ -34,7 +33,6 @@ func NewApp(config *config.Config, logger *logging.Logger) (App, error) {
 	configureMiddlewares(e, logger)
 	configureCORS(e, logger)
 	configureTimeouts(config, e)
-	configureHandlers(e)
 	return App{cfg: config, logger: logger, e: e}, nil
 }
 
@@ -82,8 +80,4 @@ func configureCORS(e *echo.Echo, logger *logging.Logger) {
 		AllowMethods: []string{echo.GET, echo.POST},
 	}))
 	logger.Info("CORS configured.")
-}
-
-func configureHandlers(e *echo.Echo) {
-	e.GET("/health", handlers.Health)
 }
