@@ -22,5 +22,6 @@ func main() {
 	if err != nil {
 		logger.Fatal(err)
 	}
+
 	app.Run()
 }
