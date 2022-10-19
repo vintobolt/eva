@@ -10,17 +10,19 @@ import (
 
 type Config struct {
 	Database struct {
-		Ip       string `env:"PG_IP" env-required:"true" env-description:"database ip address"`
-		Port     string `env:"PG_PORT" env-required:"true" env-description:"database port"`
-		User     string `env:"PG_USER" env-required:"true" env-description:"database user"`
-		Password string `env:"PG_PASSWD" env-required:"true" env-description:"database passwd"`
-		Dbname   string `env:"PG_DBNAME" env-required:"true" env-description:"database name"`
+		Ip        string `env:"PG_IP" env-required:"true" env-description:"database ip address"`
+		Port      string `env:"PG_PORT" env-required:"true" env-description:"database port"`
+		User      string `env:"PG_USER" env-required:"true" env-description:"database user"`
+		Password  string `env:"PG_PASSWD" env-required:"true" env-description:"database passwd"`
+		Dbname    string `env:"PG_DBNAME" env-required:"true" env-description:"database name"`
+		Timeout   int    `env:"PG_TIMEOUT" env-required:"true" env-description:"query timeout"`
+		KeepAlive int    `env:"PG_KEEP_ALIVE" env-required:"true" env-description:"reconnection timeout"`
 	}
 	Server struct {
 		Ip           string `env:"SRV_IP" env-required:"true" env-description:"EVA server ip address"`
 		Port         string `env:"SRV_PORT" env-required:"true" env-description:"EVA server port"`
 		LogPath      string `env:"SRV_LOGPATH" env-required:"true" env-description:"EVA servers log path"`
-		Timeout      int    `env:"SRV_GRACEFUL_TIMEOUT" env-required="true" env-description:"TIMEOUT for GRACEFUL shutdown"`
+		Timeout      int    `env:"SRV_GRACEFUL_TIMEOUT" env-required="true" env-description:"Timeout for graceful shutdown"`
 		LogLevel     string `env:"SRV_LOGLEVEL" env-description:"Levels: Debug, Info, Warning, Error, DPanic, Panic, and Fatal."`
 		ReadTimeout  int    `env:"SRV_READ_TIMEOUT" env-description:"HTTP read timeout"`
 		WriteTimeout int    `env:"SRV_WRITE_TIMEOUT" env-description:"HTTP write timeout"`
