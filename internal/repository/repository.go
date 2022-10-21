@@ -8,11 +8,11 @@ import (
 )
 
 type Repository struct {
-	userRepository *repository.UsersRepository
+	UserRepository *repository.UsersRepository
 }
 
 func NewRepository(pgxpool *pgxpool.Pool, logger *logging.Logger) *Repository {
 	return &Repository{
-		userRepository: repository.NewUsersRepository(pgxpool),
+		UserRepository: repository.NewUsersRepository(pgxpool),
 	}
 }

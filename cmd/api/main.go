@@ -1,9 +1,11 @@
 package main
 
 import (
-	"eva/internal/app"
 	"eva/internal/config"
+	"eva/internal/repository"
 	"eva/pkg/logging"
+	"eva/pkg/postgresql"
+	"fmt"
 	"log"
 )
 
@@ -18,10 +20,20 @@ func main() {
 	logger := logging.GetLogger()
 	log.Println("Logger set up.")
 
-	app, err := app.NewApp(cfg, &logger)
-	if err != nil {
-		logger.Fatal(err)
-	}
+	pgpool := postgresql.NewPgxPool(cfg.GetPostgresConnectionString(), &logger)
 
-	app.Run()
+	repo := repository.NewRepository(pgpool, &logger)
+	userRole, err := repo.UserRepository.GetRoleByLogin("vintobot")
+	if err != nil {
+		logger.Error(err)
+	}
+	fmt.Printf("%+v", userRole)
+
+	/*
+		app, err := app.NewApp(cfg, &logger)
+		if err != nil {
+			logger.Fatal(err)
+		}
+
+		app.Run()*/
 }
