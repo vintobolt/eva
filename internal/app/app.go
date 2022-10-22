@@ -47,7 +47,7 @@ func (a *App) Run() {
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, os.Interrupt)
 	<-quit
-	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(a.cfg.Server.Timeout))
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(a.cfg.Server.ShutdownTimeout))
 	defer cancel()
 	if err := a.e.Shutdown(ctx); err != nil {
 		a.e.Logger.Fatal(err)
