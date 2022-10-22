@@ -7,12 +7,14 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-type Repository struct {
-	UserRepository *repository.UsersRepository
+// Repositories contain all repos
+type Repositories struct {
+	UserRepository *repository.UserRepository
 }
 
-func NewRepository(pgxpool *pgxpool.Pool, logger *logging.Logger) *Repository {
-	return &Repository{
-		UserRepository: repository.NewUsersRepository(pgxpool),
+// Constructor
+func NewRepositories(pgxpool *pgxpool.Pool, logger *logging.Logger) *Repositories {
+	return &Repositories{
+		UserRepository: repository.NewUserRepository(pgxpool, logger),
 	}
 }

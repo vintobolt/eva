@@ -6,12 +6,9 @@ type UserModel struct {
 	Fullname string
 }
 
-type UserCredsModel struct {
+type User struct {
 	Login    string
-	Password string
-}
-
-type UserRole struct {
-	Login string
-	Role  string
+	Passwd   string
+	Role     string
+	Fullname string
 }

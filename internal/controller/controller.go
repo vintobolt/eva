@@ -5,12 +5,14 @@ import (
 	"eva/internal/repository"
 )
 
+// Controllers contains all the controllers
 type Controllers struct {
-	userController *user.UserController
+	userController *user.Controller
 }
 
-func NewControllers(repository *repository.Repository) *Controllers {
+// Constructor return a new Controllers
+func NewControllers(repositories *repository.Repositories) *Controllers {
 	return &Controllers{
-		userController: ,
+		userController: user.NewController(repositories.UserRepository),
 	}
 }

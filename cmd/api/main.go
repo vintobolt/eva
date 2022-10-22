@@ -20,14 +20,16 @@ func main() {
 	logger := logging.GetLogger()
 	log.Println("Logger set up.")
 
+	// Init postgresql connection pooler
 	pgpool := postgresql.NewPgxPool(cfg.GetPostgresConnectionString(), &logger)
 
-	repo := repository.NewRepository(pgpool, &logger)
-	userRole, err := repo.UserRepository.GetRoleByLogin("vintobot")
+	// Init repo
+	repo := repository.NewRepositories(pgpool, &logger)
+	user, err := repo.UserRepository.GetExistUser("vintobot")
 	if err != nil {
 		logger.Error(err)
 	}
-	fmt.Printf("%+v", userRole)
+	fmt.Printf("%+v", user)
 
 	/*
 		app, err := app.NewApp(cfg, &logger)
