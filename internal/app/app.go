@@ -3,6 +3,7 @@ package app
 import (
 	"context"
 	"eva/internal/config"
+	"eva/internal/controller"
 	"eva/pkg/logging"
 	"net/http"
 	"os"
@@ -21,19 +22,20 @@ type Appv interface {
 }
 
 type App struct {
-	cfg    *config.Config
-	logger *logging.Logger
-	e      *echo.Echo
+	cfg         *config.Config
+	logger      *logging.Logger
+	e           *echo.Echo
+	controllers *controller.Controllers
 }
 
-func NewApp(config *config.Config, logger *logging.Logger) (App, error) {
+func NewApp(config *config.Config, logger *logging.Logger, controllers *controller.Controllers) (App, error) {
 	e := echo.New()
 	logger.Info("swagger doc initializing")
 	configureSwagger(e)
 	configureMiddlewares(e, logger)
 	configureCORS(e, logger)
 	configureTimeouts(config, e)
-	return App{cfg: config, logger: logger, e: e}, nil
+	return App{cfg: config, logger: logger, e: e, controllers: controllers}, nil
 }
 
 func (a *App) Run() {
