@@ -27,3 +27,7 @@ update-lint:
 	go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 swagger:
 	swag init -g cmd/api/main.go -o docs
+migrate_up:
+	migrate -path migrations -database "postgresql://$(PG_USER):$(PG_PASSWD)@$(PG_IP):$(PG_PORT)/$(PG_DBNAME)?sslmode=disable" -verbose up
+migrate_down:
+	migrate -path migrations -database "postgresql://$(PG_USER):$(PG_PASSWD)@$(PG_IP):$(PG_PORT)/$(PG_DBNAME)?sslmode=disable" -verbose down

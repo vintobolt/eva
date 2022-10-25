@@ -1,0 +1,13 @@
+CREATE TABLE users 
+(
+    id SERIAL PRIMARY KEY,
+    email TEXT UNIQUE NOT NULL,
+    username TEXT UNIQUE NOT NULL,
+    fullname TEXT NOT NULL,
+    password TEXT NOT NULL,
+    active BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    deleted_at TIMESTAMPTZ,
+    token TEXT UNIQUE
+);
