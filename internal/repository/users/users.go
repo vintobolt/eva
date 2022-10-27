@@ -10,35 +10,27 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-type UserRepository struct {
+// UserRepository interface
+type UserRepository interface {
+	GetExistUser(login string) (models.User, error)
+	CreateUser()
+	DeleteUser()
+}
+
+// UserRepositoryImpl implements UserRepository interface
+type UserRepositoryImpl struct {
 	dbPool *pgxpool.Pool
 	logger *logging.Logger
 }
 
-func NewUserRepository(dbPool *pgxpool.Pool, logger *logging.Logger) *UserRepository {
-	return &UserRepository{
+func NewUserRepository(dbPool *pgxpool.Pool, logger *logging.Logger) UserRepository {
+	return &UserRepositoryImpl{
 		dbPool: dbPool,
 		logger: logger,
 	}
 }
 
-/*
-func (r *UserRepository) GetRoleByLogin(login string) (models.UserRole, error) {
-	sql := fmt.Sprintf("SELECT rolename, fullname FROM users WHERE login='%s';", login)
-	var rolename string
-	var fullname string
-	err := r.dbPool.QueryRow(context.Background(), sql).Scan(&rolename, &fullname)
-	if err != nil {
-		fmt.Println(err)
-	}
-	//user := models.UserModel{Login: login, Role: rolename, Fullname: fullname}
-	user := models.UserRole{Login: login, Role: rolename}
-	fmt.Printf("%+v\n", user)
-	return user, nil
-} */
-
-// TODO:
-func (r *UserRepository) GetExistUser(login string) (models.User, error) {
+func (r *UserRepositoryImpl) GetExistUser(login string) (models.User, error) {
 	sql := fmt.Sprintf("SELECT passwd, role, fullname FROM users WHERE login='%s';", login)
 	var passwd string
 	var role string
@@ -52,12 +44,12 @@ func (r *UserRepository) GetExistUser(login string) (models.User, error) {
 }
 
 // TODO:
-func (r *UserRepository) CreateUser() {
+func (r *UserRepositoryImpl) CreateUser() {
 
 }
 
 // TODO:
-func (r *UserRepository) DeleteUser() {
+func (r *UserRepositoryImpl) DeleteUser() {
 
 }
 

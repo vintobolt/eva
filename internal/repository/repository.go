@@ -9,12 +9,12 @@ import (
 
 // Repositories contain all repos
 type Repositories struct {
-	UserRepository *repository.UserRepository
+	UserRepo repository.UserRepository
 }
 
 // Constructor
 func NewRepositories(pgxpool *pgxpool.Pool, logger *logging.Logger) *Repositories {
 	return &Repositories{
-		UserRepository: repository.NewUserRepository(pgxpool, logger),
+		UserRepo: repository.NewUserRepository(pgxpool, logger),
 	}
 }
