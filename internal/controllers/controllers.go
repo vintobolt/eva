@@ -1,18 +1,18 @@
-package controller
+package controllers
 
 import (
-	"eva/internal/controller/user"
+	"eva/internal/controllers/user"
 	"eva/internal/repository"
 )
 
 // Controllers contains all the controllers
 type Controllers struct {
-	userController *user.UserController
+	UserController *user.UserController
 }
 
 // Constructor return a new Controllers
 func NewControllers(repositories *repository.Repositories) *Controllers {
 	return &Controllers{
-		userController: user.NewController(repositories.UserRepo),
+		UserController: user.NewController(repositories.UserRepo),
 	}
 }

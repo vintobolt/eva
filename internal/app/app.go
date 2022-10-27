@@ -3,7 +3,7 @@ package app
 import (
 	"context"
 	"eva/internal/config"
-	"eva/internal/controller"
+	"eva/internal/controllers"
 	"eva/pkg/logging"
 	"net/http"
 	"os"
@@ -24,10 +24,10 @@ type App struct {
 	cfg         *config.Config
 	logger      *logging.Logger
 	e           *echo.Echo
-	controllers *controller.Controllers
+	controllers *controllers.Controllers
 }
 
-func NewApp(config *config.Config, logger *logging.Logger, controllers *controller.Controllers) (App, error) {
+func NewApp(config *config.Config, logger *logging.Logger, controllers *controllers.Controllers) (App, error) {
 	e := echo.New()
 	logger.Info("swagger doc initializing")
 	configureSwagger(e)

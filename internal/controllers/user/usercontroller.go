@@ -3,6 +3,8 @@ package user
 import (
 	"eva/internal/models"
 	"eva/internal/repository/users"
+
+	"github.com/labstack/echo/v4"
 )
 
 // declaring the repository interface in the controller package
@@ -27,6 +29,6 @@ func NewController(userRepository users.UserRepository) *UserController {
 	}
 }
 
-func (c *UserController) GetExistUser(login string) (models.User, error) {
+func (c *UserController) GetExistUser(ec echo.Context) (models.User, error) {
 	return c.userRepo.GetExistUser(login)
 }
