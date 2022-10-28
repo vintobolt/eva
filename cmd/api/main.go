@@ -1,11 +1,12 @@
 package main
 
 import (
+	"eva/internal/app"
 	"eva/internal/config"
+	"eva/internal/controllers"
 	"eva/internal/repository"
 	"eva/pkg/logging"
 	"eva/pkg/postgresql"
-	"fmt"
 	"log"
 )
 
@@ -25,17 +26,10 @@ func main() {
 
 	// Init repo
 	repo := repository.NewRepositories(pgpool, &logger)
-	user, err := repo.UserRepository.GetExistUser("vintobot")
+	controllers := controllers.NewControllers(repo)
+	app, err := app.NewApp(cfg, &logger, controllers)
 	if err != nil {
-		logger.Error(err)
+		logger.Fatal(err)
 	}
-	fmt.Printf("%+v", user)
-
-	/*
-		app, err := app.NewApp(cfg, &logger)
-		if err != nil {
-			logger.Fatal(err)
-		}
-
-		app.Run()*/
+	app.Run()
 }

@@ -1,8 +1,8 @@
 package user
 
 import (
-	"eva/internal/models"
 	"eva/internal/repository/users"
+	"fmt"
 
 	"github.com/labstack/echo/v4"
 )
@@ -29,6 +29,13 @@ func NewController(userRepository users.UserRepository) *UserController {
 	}
 }
 
-func (c *UserController) GetExistUser(ec echo.Context) (models.User, error) {
-	return c.userRepo.GetExistUser(login)
+// swagger:route POST /v1/users:login users login
+func (c *UserController) GetExistUser(ec echo.Context) error {
+	login := ec.QueryParam("login")
+	user, err := c.userRepo.GetExistUser(login)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Printf("user: %v", user)
+	return ec.JSON(200, user)
 }

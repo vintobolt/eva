@@ -7,5 +7,8 @@ import (
 )
 
 func GetUserApiRoutes(e *echo.Echo, c controllers.Controllers) {
-	e.GET("/users", c.UserController.GetExistUser)
+	v1 := e.Group("/v1")
+	{
+		v1.GET("/users/:login", c.UserController.GetExistUser)
+	}
 }

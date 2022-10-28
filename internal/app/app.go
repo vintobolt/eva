@@ -4,6 +4,7 @@ import (
 	"context"
 	"eva/internal/config"
 	"eva/internal/controllers"
+	"eva/internal/routes"
 	"eva/pkg/logging"
 	"net/http"
 	"os"
@@ -34,6 +35,7 @@ func NewApp(config *config.Config, logger *logging.Logger, controllers *controll
 	configureMiddlewares(e, logger)
 	configureCORS(e, logger)
 	configureTimeouts(config, e)
+	routes.GetUserApiRoutes(e, *controllers)
 	return App{cfg: config, logger: logger, e: e, controllers: controllers}, nil
 }
 
