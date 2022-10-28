@@ -35,6 +35,7 @@ func NewApp(config *config.Config, logger *logging.Logger, controllers *controll
 	configureMiddlewares(e, logger)
 	configureCORS(e, logger)
 	configureTimeouts(config, e)
+	configureHealthCheck(e, logger)
 	routes.GetUserApiRoutes(e, *controllers)
 	return App{cfg: config, logger: logger, e: e, controllers: controllers}, nil
 }

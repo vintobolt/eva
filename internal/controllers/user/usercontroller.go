@@ -29,9 +29,17 @@ func NewController(userRepository users.UserRepository) *UserController {
 	}
 }
 
-// swagger:route POST /v1/users:login users login
+// GetUser godoc
+// @Summary Get a user
+// @Description Get a user item
+// @Tags users
+// @Produce json
+// @Param mediaType query string false "mediaType" Enums(json, xml)
+// @Param id path string true "User ID"
+// @Success 200 {object} models.User
+// @Router /users/{id} [get]
 func (c *UserController) GetExistUser(ec echo.Context) error {
-	login := ec.QueryParam("login")
+	login := ec.Param("login")
 	user, err := c.userRepo.GetExistUser(login)
 	if err != nil {
 		fmt.Println(err)

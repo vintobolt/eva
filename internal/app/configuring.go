@@ -13,8 +13,8 @@ import (
 )
 
 func configureTimeouts(cfg *config.Config, e *echo.Echo) {
-	e.Server.ReadTimeout = time.Duration(cfg.Server.ReadTimeout)
-	e.Server.WriteTimeout = time.Duration(cfg.Server.WriteTimeout)
+	e.Server.ReadTimeout = time.Duration(cfg.Server.ReadTimeout) * time.Second
+	e.Server.WriteTimeout = time.Duration(cfg.Server.WriteTimeout) * time.Second
 }
 
 func configureSwagger(e *echo.Echo) {
@@ -38,4 +38,14 @@ func configureCORS(e *echo.Echo, logger *logging.Logger) {
 		AllowMethods: []string{echo.GET, echo.POST},
 	}))
 	logger.Info("CORS configured.")
+}
+
+// healthcheck
+func healthCheck(c echo.Context) error {
+	return c.String(http.StatusOK, "OK")
+}
+
+func configureHealthCheck(e *echo.Echo, logger *logging.Logger) {
+	e.GET("/health", healthCheck)
+	logger.Info("Health check configured.")
 }

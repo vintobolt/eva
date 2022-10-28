@@ -1,4 +1,45 @@
+definitions:
+  models.User:
+    properties:
+      fullname:
+        type: string
+      login:
+        type: string
+      passwd:
+        type: string
+      role:
+        type: string
+    type: object
 info:
   contact: {}
-paths: {}
+paths:
+  /users/{id}:
+    get:
+      consumes:
+      - application/json
+      - text/xml
+      description: Get a user item
+      parameters:
+      - description: mediaType
+        enum:
+        - json
+        - xml
+        in: query
+        name: mediaType
+        type: string
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+      summary: Get a user
+      tags:
+      - users
 swagger: "2.0"
