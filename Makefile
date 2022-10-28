@@ -15,7 +15,7 @@ export SRV_READ_TIMEOUT := ${SRV_READ_TIMEOUT}
 export SRV_WRITE_TIMEOUT := ${SRV_WRITE_TIMEOUT}
 
 
-go_run:
+go:
 	go run cmd/api/main.go
 build:
 	go build -o bin/ cmd/api/main.go
