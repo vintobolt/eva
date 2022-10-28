@@ -26,7 +26,7 @@ type Config struct {
 		ReadTimeout     int    `env:"SRV_READ_TIMEOUT" env-description:"HTTP read timeout"`
 		WriteTimeout    int    `env:"SRV_WRITE_TIMEOUT" env-description:"HTTP write timeout"`
 		JWTSecret       string `env:"SRV_JWT_SECRET" env-default=""  env-description:"JWT secret key"`
-		JWTExpirationMS int    `env:"SRV_JWT_EXPIRATION_MS" env-default:"86400000" env-description:"JWT expire time in seconds"`
+		//		JWTExpirationMS int    `env:"SRV_JWT_EXPIRATION_MS" env-default:"86400000" env-description:"JWT expire time in seconds"`
 	}
 }
 

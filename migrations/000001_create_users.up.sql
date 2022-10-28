@@ -4,12 +4,11 @@ CREATE TABLE users
     email TEXT UNIQUE,
     username TEXT UNIQUE NOT NULL,
     fullname TEXT,
-    rolename TEXT NOT NULL,
+    rolename TEXT,
     password TEXT NOT NULL,
     active BOOLEAN NOT NULL DEFAULT FALSE,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    deleted_at TIMESTAMPTZ,
     token TEXT
 );
 
