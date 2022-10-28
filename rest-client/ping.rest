@@ -1,3 +1,0 @@
-@host = localhost:8089 
-
-GET http://{{host}}/ping HTTP/1.1
