@@ -4,6 +4,7 @@ import (
 	"eva/internal/config"
 	"os"
 
+	"github.com/mattn/go-colorable"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
@@ -22,6 +23,7 @@ func init() {
 	globalConfig := config.GetConfig()
 	loggerConfig := zap.NewProductionEncoderConfig()
 	loggerConfig.EncodeTime = zapcore.RFC3339NanoTimeEncoder
+	loggerConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
 	fileEncoder := zapcore.NewJSONEncoder(loggerConfig)
 	consoleEncoder := zapcore.NewConsoleEncoder(loggerConfig)
 	logFile, _ := os.OpenFile(globalConfig.Server.LogPath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
@@ -30,7 +32,7 @@ func init() {
 	defaultLogLevel := getLoglevelFromConfig(*globalConfig)
 	core := zapcore.NewTee(
 		zapcore.NewCore(fileEncoder, writer, defaultLogLevel),
-		zapcore.NewCore(consoleEncoder, zapcore.AddSync(os.Stdout), defaultLogLevel),
+		zapcore.NewCore(consoleEncoder, zapcore.AddSync(colorable.NewColorableStdout()), defaultLogLevel),
 	)
 	logger := zap.New(core, zap.AddCaller(), zap.AddStacktrace(zapcore.ErrorLevel))
 	sugar := logger.Sugar()

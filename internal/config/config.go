@@ -25,7 +25,7 @@ type Config struct {
 		LogLevel        string `env:"SRV_LOGLEVEL" env-description:"Levels: Debug, Info, Warning, Error, DPanic, Panic, and Fatal."`
 		ReadTimeout     int    `env:"SRV_READ_TIMEOUT" env-description:"HTTP read timeout"`
 		WriteTimeout    int    `env:"SRV_WRITE_TIMEOUT" env-description:"HTTP write timeout"`
-		JWTSecret       string `env:"SRV_JWT_SECRET" env-default="R1BYcTVXVGNDU2JmWHVnZ1lnN0FKeGR3cU1RUU45QXV4SDJONFZ3ckhwS1N0ZjNCYVkzZ0F4RVBSS1UzRENwRw=="  env-description:"JWT secret key"`
+		JWTSecret       string `env:"SRV_JWT_SECRET" env-default=""  env-description:"JWT secret key"`
 		JWTExpirationMS int    `env:"SRV_JWT_EXPIRATION_MS" env-default:"86400000" env-description:"JWT expire time in seconds"`
 	}
 }

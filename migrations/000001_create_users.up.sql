@@ -1,16 +1,16 @@
 CREATE TABLE users 
 (
     id SERIAL PRIMARY KEY,
-    email TEXT UNIQUE NOT NULL,
+    email TEXT UNIQUE,
     username TEXT UNIQUE NOT NULL,
-    fullname TEXT NOT NULL,
+    fullname TEXT,
     rolename TEXT NOT NULL,
     password TEXT NOT NULL,
     active BOOLEAN NOT NULL DEFAULT FALSE,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     deleted_at TIMESTAMPTZ,
-    token TEXT UNIQUE
+    token TEXT
 );
 
 INSERT INTO users (email, username, fullname, rolename, password, active, created_at, updated_at)

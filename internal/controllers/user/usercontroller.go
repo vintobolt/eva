@@ -47,3 +47,20 @@ func (c *UserController) GetExistUser(ec echo.Context) error {
 	fmt.Printf("user: %v", user)
 	return ec.JSON(200, user)
 }
+
+func (c *UserController) SignIn(ec echo.Context) error {
+	fmt.Println(ec.Request().Header.Get("Authorization"))
+	login := ec.FormValue("login")
+	password := ec.FormValue("password")
+	fmt.Println("heheh", login, password)
+	return ec.JSON(200, "ok")
+	//return nil
+}
+
+func (c *UserController) SignUp(ec echo.Context) error {
+	return nil
+}
+
+func (c *UserController) RefreshToken(ec echo.Context) error {
+	return nil
+}
