@@ -1,6 +1,7 @@
 package user
 
 import (
+	"eva/internal/models"
 	"eva/internal/repository/users"
 	"fmt"
 
@@ -57,8 +58,20 @@ func (c *UserController) SignIn(ec echo.Context) error {
 	//return nil
 }
 
+// @Summary Create a user
+// @Description Create a user
+// @Tags users
+// @Accept  json
+// @Produce json
+// @Success 200 {object} string "ok"
+// @Router /users/signup [post]
 func (c *UserController) SignUp(ec echo.Context) error {
-	return nil
+	userData := models.SignUp{}
+	if err := ec.Bind(&userData); err != nil {
+		return err
+	}
+	fmt.Printf("%+v", userData)
+	return ec.JSON(200, "ok")
 }
 
 func (c *UserController) RefreshToken(ec echo.Context) error {

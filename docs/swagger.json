@@ -1,16 +1,49 @@
 {
     "swagger": "2.0",
     "info": {
-        "contact": {}
+        "description": "EVA API documentation",
+        "title": "Swagger EVA API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "vintobolt",
+            "url": "vintobolt",
+            "email": "vintobolt@protonmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "0.1"
     },
+    "host": "127.0.0.1:8089",
+    "basePath": "/api/v1/",
     "paths": {
+        "/users/signup": {
+            "post": {
+                "description": "Create a user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Create a user",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/users/{id}": {
             "get": {
                 "description": "Get a user item",
-                "consumes": [
-                    "application/json",
-                    "text/xml"
-                ],
                 "produces": [
                     "application/json"
                 ],

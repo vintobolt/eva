@@ -12,7 +12,7 @@ import (
 	"time"
 
 	"github.com/labstack/echo/v4"
-	_ "github.com/swaggo/echo-swagger/example/docs"
+	//_ "github.com/swaggo/echo-swagger/example/docs"
 )
 
 /*

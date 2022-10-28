@@ -10,19 +10,47 @@ const docTemplate = `{
     "info": {
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
-        "contact": {},
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "vintobolt",
+            "url": "vintobolt",
+            "email": "vintobolt@protonmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/users/signup": {
+            "post": {
+                "description": "Create a user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "users"
+                ],
+                "summary": "Create a user",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/users/{id}": {
             "get": {
                 "description": "Get a user item",
-                "consumes": [
-                    "application/json",
-                    "text/xml"
-                ],
                 "produces": [
                     "application/json"
                 ],
@@ -83,12 +111,12 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "",
-	Host:             "",
-	BasePath:         "",
+	Version:          "0.1",
+	Host:             "127.0.0.1:8089",
+	BasePath:         "/api/v1/",
 	Schemes:          []string{},
-	Title:            "",
-	Description:      "",
+	Title:            "Swagger EVA API",
+	Description:      "EVA API documentation",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 }

@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"time"
 
+	_ "eva/docs"
+
 	"github.com/brpaz/echozap"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"

@@ -13,8 +13,8 @@ import (
 // UserRepository interface
 type UserRepository interface {
 	GetExistUser(login string) (models.User, error)
-	CreateUser()
-	DeleteUser()
+	CreateUser(username, password, fullname string) error
+	Deactivate(username string) error
 }
 
 // UserRepositoryImpl implements UserRepository interface
@@ -44,13 +44,22 @@ func (r *UserRepositoryImpl) GetExistUser(login string) (models.User, error) {
 }
 
 // TODO:
-func (r *UserRepositoryImpl) CreateUser() {
-
+func (r *UserRepositoryImpl) CreateUser(username, password, fullname string) error {
+	hashedPassword, err := hashPassword(password)
+	if err != nil {
+		return err
+	}
+	sql := fmt.Sprintf("INSERT INTO users (username, password, fullname) VALUES ('%s', '%s', '%s');", username, hashedPassword, fullname)
+	_, err = r.dbPool.Exec(context.Background(), sql)
+	if err != nil {
+		r.logger.Error(err)
+	}
+	return nil
 }
 
 // TODO:
-func (r *UserRepositoryImpl) DeleteUser() {
-
+func (r *UserRepositoryImpl) Deactivate(username string) error {
+	return nil
 }
 
 func hashPassword(password string) (string, error) {

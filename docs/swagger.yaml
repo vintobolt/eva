@@ -1,3 +1,4 @@
+basePath: /api/v1/
 definitions:
   models.User:
     properties:
@@ -10,14 +11,22 @@ definitions:
       role:
         type: string
     type: object
+host: 127.0.0.1:8089
 info:
-  contact: {}
+  contact:
+    email: vintobolt@protonmail.com
+    name: vintobolt
+    url: vintobolt
+  description: EVA API documentation
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger EVA API
+  version: "0.1"
 paths:
   /users/{id}:
     get:
-      consumes:
-      - application/json
-      - text/xml
       description: Get a user item
       parameters:
       - description: mediaType
@@ -40,6 +49,21 @@ paths:
           schema:
             $ref: '#/definitions/models.User'
       summary: Get a user
+      tags:
+      - users
+  /users/signup:
+    post:
+      consumes:
+      - application/json
+      description: Create a user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: Create a user
       tags:
       - users
 swagger: "2.0"
