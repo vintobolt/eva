@@ -8,7 +8,6 @@ import (
 	"eva/pkg/logging"
 	"eva/pkg/postgresql"
 	"log"
-	//_ "eva/docs"
 )
 
 // @title Swagger EVA API

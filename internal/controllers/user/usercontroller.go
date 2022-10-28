@@ -8,15 +8,6 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-// declaring the repository interface in the controller package
-// allows us to easily swap out the actual implementation, enforcing loose coupling
-/*
-type repository interface {
-	GetExistUser(login string) (models.User, error)
-	CreateUser()
-	DeleteUser()
-}
-*/
 // Controller contains the service, which contains database-related logic
 // as an injectable dependency, allowing us to decouple business logic from db package
 type UserController struct {
