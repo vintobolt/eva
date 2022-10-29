@@ -37,7 +37,8 @@ func (r *UserRepositoryImpl) GetExistUser(login string) (models.User, error) {
 	var passwd string
 	var role string
 	var fullname string
-	err := r.dbPool.QueryRow(context.Background(), sql).Scan(&passwd, &role, &fullname)
+	var active bool
+	err := r.dbPool.QueryRow(context.Background(), sql).Scan(&passwd, &role, &fullname, &active)
 	if err != nil {
 		r.logger.Error(err)
 	}

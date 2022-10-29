@@ -5,6 +5,7 @@ type User struct {
 	Passwd   string
 	Role     string
 	Fullname string
+	Active   bool
 }
 
 type SignUp struct {
@@ -16,8 +17,4 @@ type SignUp struct {
 type SignIn struct {
 	Username string `json:"username" validation="required"`
 	Password string `json:"password" validation="required"`
-}
-
-type Token struct {
-	Token string `json:"token"`
 }
