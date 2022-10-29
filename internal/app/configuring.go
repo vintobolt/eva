@@ -32,6 +32,7 @@ func configureMiddlewares(e *echo.Echo, logger *logging.Logger) {
 	logger.Info("Recover middleware used.")    // middleware for wrapping panics in chain
 	e.Use(echozap.ZapLogger(logger.Desugar())) // using echozap instead default logger
 	logger.Info("Used zap logger instead default.")
+	//e.Use(middleware.JWT([]byte(config.GetConfig().Server.JWTSecret)))
 	//e.Use(middleware.BasicAuth(controllers.Controllers.))
 }
 
