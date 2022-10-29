@@ -55,9 +55,7 @@ paths:
     post:
       consumes:
       - application/json
-      description: Create a user
-      produces:
-      - application/json
+      description: Take json and create an inactive user
       responses:
         "200":
           description: ok

@@ -3,6 +3,7 @@ package user
 import (
 	"eva/internal/models"
 	"eva/internal/repository/users"
+	"eva/pkg/utils"
 	"fmt"
 
 	"github.com/labstack/echo/v4"
@@ -40,13 +41,22 @@ func (c *UserController) GetExistUser(ec echo.Context) error {
 	return ec.JSON(200, user)
 }
 
+// @Summary getting token
+// @Description
+// @Tags users
+// @Accept json
+// @Router /users/signup [post]
 func (c *UserController) SignIn(ec echo.Context) error {
-	//fmt.Println(ec.Request().Header.Get("Authorization"))
+	signInData := models.SignIn{}
+	if err := utils.BindAndValidate(ec, &signInData); err != nil {
+		return err
+	}
+	fmt.Printf("%+v\n", signInData)
 	return nil
 }
 
 // @Summary Create a user
-// @Description Create a user
+// @Description Take json and create an inactive user
 // @Tags users
 // @Accept  json
 // @Success 200 {object} string "ok"

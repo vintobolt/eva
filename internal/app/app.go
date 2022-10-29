@@ -30,6 +30,7 @@ type App struct {
 func NewApp(config *config.Config, logger *logging.Logger, controllers *controllers.Controllers) (App, error) {
 	e := echo.New()
 	logger.Info("swagger doc initializing")
+	configureValidator(e)
 	configureSwagger(e)
 	configureMiddlewares(e, logger)
 	configureCORS(e, logger)

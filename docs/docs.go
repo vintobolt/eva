@@ -27,11 +27,8 @@ const docTemplate = `{
     "paths": {
         "/users/signup": {
             "post": {
-                "description": "Create a user",
+                "description": "Take json and create an inactive user",
                 "consumes": [
-                    "application/json"
-                ],
-                "produces": [
                     "application/json"
                 ],
                 "tags": [
