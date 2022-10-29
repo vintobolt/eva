@@ -32,7 +32,7 @@ func NewUserRepository(dbPool *pgxpool.Pool, logger *logging.Logger) UserReposit
 }
 
 func (r *UserRepositoryImpl) GetExistUser(login string) (models.User, error) {
-	sql := fmt.Sprintf("SELECT password, rolename, fullname FROM users WHERE username='%s';", login)
+	sql := fmt.Sprintf("SELECT passwd, rolename, fullname FROM users WHERE username='%s';", login)
 	var passwd string
 	var role string
 	var fullname string
@@ -50,7 +50,7 @@ func (r *UserRepositoryImpl) CreateUser(signUp models.SignUp) error {
 	if err != nil {
 		return err
 	}
-	sql := fmt.Sprintf("INSERT INTO users (username, password, fullname) VALUES ('%s', '%s', '%s');", signUp.Username, hashedPassword, signUp.Fullname)
+	sql := fmt.Sprintf("INSERT INTO users (username, passwd, fullname) VALUES ('%s', '%s', '%s');", signUp.Username, hashedPassword, signUp.Fullname)
 	r.logger.Debug(sql)
 	_, err = r.dbPool.Exec(context.Background(), sql)
 	if err != nil {
