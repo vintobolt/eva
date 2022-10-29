@@ -1,9 +1,9 @@
 CREATE TABLE users 
 (
     id SERIAL PRIMARY KEY,
-    email TEXT UNIQUE DEFAULT 'none',
+    email TEXT UNIQUE DEFAULT NULL,
     username TEXT UNIQUE NOT NULL,
-    fullname TEXT,
+    fullname TEXT NOT NULL,
     rolename TEXT DEFAULT 'nobody',
     passwd TEXT NOT NULL,
     active BOOLEAN NOT NULL DEFAULT FALSE,

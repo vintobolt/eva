@@ -4,6 +4,7 @@ import (
 	"context"
 	"eva/internal/models"
 	"eva/pkg/logging"
+	"eva/pkg/utils"
 	"fmt"
 
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -46,7 +47,8 @@ func (r *UserRepositoryImpl) GetExistUser(login string) (models.User, error) {
 
 // TODO:
 func (r *UserRepositoryImpl) CreateUser(signUp models.SignUp) error {
-	hashedPassword, err := hashPassword(signUp.Password)
+	hashedPassword, err := utils.EncryptPassword(signUp.Password)
+	//hashedPassword, err := hashPassword(signUp.Password)
 	if err != nil {
 		return err
 	}

@@ -41,31 +41,26 @@ func (c *UserController) GetExistUser(ec echo.Context) error {
 }
 
 func (c *UserController) SignIn(ec echo.Context) error {
-	fmt.Println(ec.Request().Header.Get("Authorization"))
-	login := ec.FormValue("login")
-	password := ec.FormValue("password")
-	fmt.Println("heheh", login, password)
-	return ec.JSON(200, "ok")
-	//return nil
+	//fmt.Println(ec.Request().Header.Get("Authorization"))
+	return nil
 }
 
 // @Summary Create a user
 // @Description Create a user
 // @Tags users
 // @Accept  json
-// @Produce json
 // @Success 200 {object} string "ok"
 // @Router /users/signup [post]
 func (c *UserController) SignUp(ec echo.Context) error {
-	userData := models.SignUp{}
-	if err := ec.Bind(&userData); err != nil {
+	signUpData := models.SignUp{}
+	if err := ec.Bind(&signUpData); err != nil {
 		return err
 	}
-	err := c.userRepo.CreateUser(userData)
+	err := c.userRepo.CreateUser(signUpData)
 	if err != nil {
-		fmt.Println(err)
+		return err
 	}
-	fmt.Printf("%+v\n", userData)
+	fmt.Printf("%+v\n", signUpData)
 	return ec.JSON(200, "ok")
 }
 

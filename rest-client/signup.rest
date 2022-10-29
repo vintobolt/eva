@@ -9,4 +9,3 @@ Content-Type: application/json
     "password": "kebabpassw0rd",
     "fullname": "kebab lula"
 }
-

@@ -3,6 +3,7 @@ package app
 import (
 	"eva/internal/config"
 	"eva/pkg/logging"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -33,7 +34,13 @@ func configureMiddlewares(e *echo.Echo, logger *logging.Logger) {
 	e.Use(echozap.ZapLogger(logger.Desugar())) // using echozap instead default logger
 	logger.Info("Used zap logger instead default.")
 	//e.Use(middleware.JWT([]byte(config.GetConfig().Server.JWTSecret)))
-	//e.Use(middleware.BasicAuth(controllers.Controllers.))
+	//e.Use(middleware.BasicAuth(auth))
+}
+
+// FIXME:
+func auth(username, password string, c echo.Context) (bool, error) {
+	fmt.Printf("user:%s passwd:%s\n", username, password)
+	return false, nil
 }
 
 func configureCORS(e *echo.Echo, logger *logging.Logger) {
