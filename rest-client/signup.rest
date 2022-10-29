@@ -1,11 +1,12 @@
 @host = 127.0.0.1:8089 
 
 POST http://{{host}}/api/v1/users/signup HTTP/1.1
+Authorization: BasicAuth {{base64 "user:pass"}} 
 Content-Type: application/json
 
 {
     "username": "kebab",
-    "password": "kebabpasswd",
+    "password": "kebabpassw0rd",
     "fullname": "kebab lula"
 }
 

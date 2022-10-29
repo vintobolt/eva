@@ -13,7 +13,8 @@ import (
 // UserRepository interface
 type UserRepository interface {
 	GetExistUser(login string) (models.User, error)
-	CreateUser(username, password, fullname string) error
+	CreateUser(signUp models.SignUp) error
+	UpdateUser(username, rolename string, active bool) error
 	Deactivate(username string) error
 }
 
@@ -44,12 +45,13 @@ func (r *UserRepositoryImpl) GetExistUser(login string) (models.User, error) {
 }
 
 // TODO:
-func (r *UserRepositoryImpl) CreateUser(username, password, fullname string) error {
-	hashedPassword, err := hashPassword(password)
+func (r *UserRepositoryImpl) CreateUser(signUp models.SignUp) error {
+	hashedPassword, err := hashPassword(signUp.Password)
 	if err != nil {
 		return err
 	}
-	sql := fmt.Sprintf("INSERT INTO users (username, password, fullname) VALUES ('%s', '%s', '%s');", username, hashedPassword, fullname)
+	sql := fmt.Sprintf("INSERT INTO users (username, password, fullname) VALUES ('%s', '%s', '%s');", signUp.Username, hashedPassword, signUp.Fullname)
+	r.logger.Debug(sql)
 	_, err = r.dbPool.Exec(context.Background(), sql)
 	if err != nil {
 		r.logger.Error(err)
@@ -59,6 +61,11 @@ func (r *UserRepositoryImpl) CreateUser(username, password, fullname string) err
 
 // TODO:
 func (r *UserRepositoryImpl) Deactivate(username string) error {
+	return nil
+}
+
+// TODO:
+func (r *UserRepositoryImpl) UpdateUser(username, rolename string, active bool) error {
 	return nil
 }
 

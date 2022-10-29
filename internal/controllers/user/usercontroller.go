@@ -61,7 +61,11 @@ func (c *UserController) SignUp(ec echo.Context) error {
 	if err := ec.Bind(&userData); err != nil {
 		return err
 	}
-	fmt.Printf("%+v", userData)
+	err := c.userRepo.CreateUser(userData)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Printf("%+v\n", userData)
 	return ec.JSON(200, "ok")
 }
 
