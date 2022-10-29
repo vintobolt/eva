@@ -8,7 +8,6 @@ import (
 	"fmt"
 
 	"github.com/jackc/pgx/v5/pgxpool"
-	"golang.org/x/crypto/bcrypt"
 )
 
 // UserRepository interface
@@ -16,6 +15,7 @@ type UserRepository interface {
 	GetExistUser(login string) (models.User, error)
 	CreateUser(signUp models.SignUp) error
 	UpdateUser(username, rolename string, active bool) error
+	ActivateUser(username string) error
 	Deactivate(username string) error
 }
 
@@ -67,11 +67,18 @@ func (r *UserRepositoryImpl) Deactivate(username string) error {
 }
 
 // TODO:
+func (r *UserRepositoryImpl) ActivateUser(username string) error {
+	return nil
+}
+
+// TODO:
 func (r *UserRepositoryImpl) UpdateUser(username, rolename string, active bool) error {
 	return nil
 }
 
+/*
 func hashPassword(password string) (string, error) {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
 	return string(bytes), err
 }
+*/
