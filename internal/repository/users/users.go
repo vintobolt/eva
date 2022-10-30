@@ -4,7 +4,6 @@ import (
 	"context"
 	"eva/internal/models"
 	"eva/pkg/logging"
-	"eva/pkg/utils"
 	"fmt"
 
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -49,14 +48,11 @@ func (r *UserRepositoryImpl) GetExistUser(login string) (models.User, error) {
 
 // TODO:
 func (r *UserRepositoryImpl) CreateUser(signUp models.SignUp) error {
-	hashedPassword, err := utils.EncryptPassword(signUp.Password)
+	//hashedPassword, err := utils.EncryptPassword(signUp.Password)
 	//hashedPassword, err := hashPassword(signUp.Password)
-	if err != nil {
-		return err
-	}
-	sql := fmt.Sprintf("INSERT INTO users (username, passwd, fullname) VALUES ('%s', '%s', '%s');", signUp.Username, hashedPassword, signUp.Fullname)
+	sql := fmt.Sprintf("INSERT INTO users (username, passwd, fullname) VALUES ('%s', '%s', '%s');", signUp.Username, signUp.Password, signUp.Fullname)
 	r.logger.Debug(sql)
-	_, err = r.dbPool.Exec(context.Background(), sql)
+	_, err := r.dbPool.Exec(context.Background(), sql)
 	if err != nil {
 		r.logger.Error(err)
 	}
@@ -79,12 +75,12 @@ func (r *UserRepositoryImpl) UpdateUser(username, rolename string, active bool) 
 }
 
 func (r *UserRepositoryImpl) FindCredsWithUsername(username string) (*models.SignIn, error) {
-	sql := "SELECT username, passwd FROM users WHERE username='$1'"
+	sql := fmt.Sprintf("SELECT username, passwd FROM users WHERE username='%s';", username)
 	var passwd string
 	var user string
-	err := r.dbPool.QueryRow(context.Background(), sql, username).Scan(&user, &passwd)
+	err := r.dbPool.QueryRow(context.Background(), sql).Scan(&user, &passwd)
 	if err != nil {
-		r.logger.Error(err)
+		//r.logger.Error(err)
 		return &models.SignIn{}, err
 	}
 	userCreds := models.SignIn{Username: user, Password: passwd}

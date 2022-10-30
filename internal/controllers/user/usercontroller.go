@@ -68,7 +68,7 @@ func (c *UserController) SignIn(ec echo.Context) error {
 // @Router /users/signup [post]
 func (c *UserController) SignUp(ec echo.Context) error {
 	signUpData := models.SignUp{}
-	if err := ec.Bind(signUpData); err != nil {
+	if err := utils.BindAndValidate(ec, &signUpData); err != nil {
 		fmt.Println("HERE::\t", err)
 		return err
 	}

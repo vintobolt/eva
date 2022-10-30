@@ -9,9 +9,9 @@ type User struct {
 }
 
 type SignUp struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
-	Fullname string `json:"fullname"`
+	Username string `json:"username" validation="required"`
+	Password string `json:"password" validation="required"`
+	Fullname string `json:"fullname" validation="required"`
 }
 
 type SignIn struct {
