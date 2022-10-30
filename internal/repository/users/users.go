@@ -17,6 +17,7 @@ type UserRepository interface {
 	UpdateUser(username, rolename string, active bool) error
 	ActivateUser(username string) error
 	Deactivate(username string) error
+	FindCredsWithUsername(username string) (*models.SignIn, error)
 }
 
 // UserRepositoryImpl implements UserRepository interface
@@ -75,6 +76,19 @@ func (r *UserRepositoryImpl) ActivateUser(username string) error {
 // TODO:
 func (r *UserRepositoryImpl) UpdateUser(username, rolename string, active bool) error {
 	return nil
+}
+
+func (r *UserRepositoryImpl) FindCredsWithUsername(username string) (*models.SignIn, error) {
+	sql := "SELECT username, passwd FROM users WHERE username='$1'"
+	var passwd string
+	var user string
+	err := r.dbPool.QueryRow(context.Background(), sql, username).Scan(&user, &passwd)
+	if err != nil {
+		r.logger.Error(err)
+		return &models.SignIn{}, err
+	}
+	userCreds := models.SignIn{Username: user, Password: passwd}
+	return &userCreds, nil
 }
 
 /*

@@ -3,6 +3,7 @@ package user
 import (
 	"eva/internal/models"
 	"eva/internal/repository/users"
+	"eva/pkg/exception"
 	"eva/pkg/utils"
 	"fmt"
 
@@ -51,7 +52,11 @@ func (c *UserController) SignIn(ec echo.Context) error {
 	if err := utils.BindAndValidate(ec, &signInData); err != nil {
 		return err
 	}
-	fmt.Printf("%+v\n", signInData)
+	user, valid := c.ValidateCredentials(signInData.Username, signInData.Password)
+	if !valid {
+		return exception.UnauthorizedException()
+	}
+	fmt.Printf("%+v\n", user)
 	return nil
 }
 
@@ -63,10 +68,19 @@ func (c *UserController) SignIn(ec echo.Context) error {
 // @Router /users/signup [post]
 func (c *UserController) SignUp(ec echo.Context) error {
 	signUpData := models.SignUp{}
-	if err := ec.Bind(&signUpData); err != nil {
+	if err := ec.Bind(signUpData); err != nil {
+		fmt.Println("HERE::\t", err)
 		return err
 	}
-	err := c.userRepo.CreateUser(signUpData)
+	_, err := c.userRepo.FindCredsWithUsername(signUpData.Username)
+	if err == nil {
+		return exception.CinflictException("User", "User", signUpData.Username)
+	}
+	err = beforeSave(&signUpData)
+	if err != nil {
+		return err
+	}
+	err = c.userRepo.CreateUser(signUpData)
 	if err != nil {
 		return err
 	}
@@ -75,5 +89,14 @@ func (c *UserController) SignUp(ec echo.Context) error {
 }
 
 func (c *UserController) RefreshToken(ec echo.Context) error {
+	return nil
+}
+
+func beforeSave(user *models.SignUp) (err error) {
+	hashedPassword, err := utils.EncryptPassword(user.Password)
+	if err != nil {
+		return err
+	}
+	user.Password = string(hashedPassword)
 	return nil
 }
