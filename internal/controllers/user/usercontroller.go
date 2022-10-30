@@ -84,8 +84,8 @@ func (c *UserController) SignUp(ec echo.Context) error {
 	if err != nil {
 		return err
 	}
-	fmt.Printf("%+v\n", signUpData)
-	return ec.JSON(200, "ok")
+
+	return ec.JSON(200, signUpData)
 }
 
 func (c *UserController) RefreshToken(ec echo.Context) error {
