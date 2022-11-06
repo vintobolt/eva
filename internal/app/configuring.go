@@ -15,15 +15,18 @@ import (
 	echoSwagger "github.com/swaggo/echo-swagger"
 )
 
+// set http timeouts.
 func configureTimeouts(cfg *config.Config, e *echo.Echo) {
 	e.Server.ReadTimeout = time.Duration(cfg.Server.ReadTimeout) * time.Second
 	e.Server.WriteTimeout = time.Duration(cfg.Server.WriteTimeout) * time.Second
 }
 
+// enable validation
 func configureValidator(e *echo.Echo) {
 	e.Validator = utils.NewValidatorUtil()
 }
 
+// serve swagger files
 func configureSwagger(e *echo.Echo) {
 	e.GET("/swagger", func(c echo.Context) error {
 		c.Redirect(http.StatusMovedPermanently, "/swagger/index.html")

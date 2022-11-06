@@ -4,6 +4,6 @@ POST http://{{host}}/api/v1/users/signin HTTP/1.1
 Content-Type: application/json
 
 {
-    "username": "vintobot123",
+    "username": "kebab",
     "password": "kebabpassw0rd2"
 }
