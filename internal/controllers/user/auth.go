@@ -5,11 +5,11 @@ import (
 	"eva/pkg/utils"
 )
 
-func (c *UserController) ValidateCredentials(username, password string) (*models.SignIn, bool) {
+func (c *UserController) ValidateCredentials(username, password string) (*models.User, bool) {
 	//user, err := c.userRepo.FindByEmail(username)
-	user, err := c.userRepo.FindCredsWithUsername(username)
-	if err != nil || utils.VerifyPassword(user.Password, password) != nil {
+	user, err := c.userRepo.GetExistUser(username)
+	if err != nil || utils.VerifyPassword(user.Passwd, password) != nil {
 		return nil, false
 	}
-	return user, true
+	return &user, true
 }

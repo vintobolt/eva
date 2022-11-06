@@ -46,6 +46,7 @@ func (c *UserController) GetExistUser(ec echo.Context) error {
 	return ec.JSON(200, user)
 }
 
+// TODO: add logger
 func (c *UserController) SignIn(ec echo.Context) error {
 	payload := models.SignIn{}
 	if err := utils.BindAndValidate(ec, &payload); err != nil {
@@ -56,9 +57,14 @@ func (c *UserController) SignIn(ec echo.Context) error {
 		return exception.UnauthorizedException()
 	}
 
-	//jwt, err := utils.GenerateJwtToken(user)
+	jwt, err := utils.GenerateJwtToken(user)
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+
 	fmt.Printf("%+v\n", user)
-	return nil
+	return ec.JSON(200, models.Token{Token: jwt})
 }
 
 // SignUp godoc
