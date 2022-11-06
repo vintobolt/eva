@@ -27,11 +27,15 @@ func NewController(userRepository users.UserRepository) *UserController {
 // @Summary Get a user
 // @Description Get a user item
 // @Tags users
+// @Accept json
 // @Produce json
-// @Param mediaType query string false "mediaType" Enums(json, xml)
+// @Param mediaType query string false "mediaType" Enums(json)
 // @Param id path string true "User ID"
 // @Success 200 {object} models.User
-// @Router /users/{id} [get]
+// @Failure 404 {object} handler.APIError
+// @Failure 500 {object} handler.APIError
+// @Router /users/{login} [get]
+// @Security ApiKeyAuth
 func (c *UserController) GetExistUser(ec echo.Context) error {
 	login := ec.Param("login")
 	user, err := c.userRepo.GetExistUser(login)
@@ -42,30 +46,34 @@ func (c *UserController) GetExistUser(ec echo.Context) error {
 	return ec.JSON(200, user)
 }
 
-// @Summary getting token
-// @Description
-// @Tags users
-// @Accept json
-// @Router /users/signup [post]
 func (c *UserController) SignIn(ec echo.Context) error {
-	signInData := models.SignIn{}
-	if err := utils.BindAndValidate(ec, &signInData); err != nil {
+	payload := models.SignIn{}
+	if err := utils.BindAndValidate(ec, &payload); err != nil {
 		return err
 	}
-	user, valid := c.ValidateCredentials(signInData.Username, signInData.Password)
+	user, valid := c.ValidateCredentials(payload.Username, payload.Password)
 	if !valid {
 		return exception.UnauthorizedException()
 	}
+
+	//jwt, err := utils.GenerateJwtToken(user)
 	fmt.Printf("%+v\n", user)
 	return nil
 }
 
-// @Summary Create a user
-// @Description Take json and create an inactive user
+// SignUp godoc
+// @Summary Create an inactive user
+// @Description Create a new user item
 // @Tags users
-// @Accept  json
-// @Success 200 {object} string "ok"
-// @Router /users/signup [post]
+// @Accept json
+// @Produce json
+// @Param mediaType query string false "mediaType" Enums(json)
+// @Param user body models.SignUp true "New User"
+// @Success 200 {object} models.SignUp
+// @Failure 400 {object} handler.APIError
+// @Failure 409 {object} handler.APIError
+// @Failure 500 {object} handler.APIError
+// @Router /signup [post]
 func (c *UserController) SignUp(ec echo.Context) error {
 	signUpData := models.SignUp{}
 	if err := utils.BindAndValidate(ec, &signUpData); err != nil {
