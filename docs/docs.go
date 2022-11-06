@@ -25,29 +25,78 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/users/signup": {
+        "/signup": {
             "post": {
-                "description": "Take json and create an inactive user",
+                "description": "Create a new user item",
                 "consumes": [
+                    "application/json"
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "users"
                 ],
-                "summary": "Create a user",
+                "summary": "Create an inactive user",
+                "parameters": [
+                    {
+                        "enum": [
+                            "json"
+                        ],
+                        "type": "string",
+                        "description": "mediaType",
+                        "name": "mediaType",
+                        "in": "query"
+                    },
+                    {
+                        "description": "New User",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.SignUp"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "ok",
+                        "description": "OK",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/models.SignUp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handler.APIError"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/handler.APIError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handler.APIError"
                         }
                     }
                 }
             }
         },
-        "/users/{id}": {
+        "/users/{login}": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Get a user item",
+                "consumes": [
+                    "application/json"
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -57,10 +106,6 @@ const docTemplate = `{
                 "summary": "Get a user",
                 "parameters": [
                     {
-                        "enum": [
-                            "json",
-                            "xml"
-                        ],
                         "type": "string",
                         "description": "mediaType",
                         "name": "mediaType",
@@ -80,15 +125,61 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/models.User"
                         }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handler.APIError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handler.APIError"
+                        }
                     }
                 }
             }
         }
     },
     "definitions": {
+        "handler.APIError": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                },
+                "timestamp": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.SignUp": {
+            "type": "object",
+            "properties": {
+                "fullname": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
         "models.User": {
             "type": "object",
             "properties": {
+                "active": {
+                    "type": "boolean"
+                },
                 "fullname": {
                     "type": "string"
                 },

@@ -1,7 +1,29 @@
 basePath: /api/v1/
 definitions:
+  handler.APIError:
+    properties:
+      message:
+        type: string
+      path:
+        type: string
+      status:
+        type: integer
+      timestamp:
+        type: integer
+    type: object
+  models.SignUp:
+    properties:
+      fullname:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
   models.User:
     properties:
+      active:
+        type: boolean
       fullname:
         type: string
       login:
@@ -25,14 +47,53 @@ info:
   title: Swagger EVA API
   version: "0.1"
 paths:
-  /users/{id}:
-    get:
-      description: Get a user item
+  /signup:
+    post:
+      consumes:
+      - application/json
+      description: Create a new user item
       parameters:
       - description: mediaType
         enum:
         - json
-        - xml
+        in: query
+        name: mediaType
+        type: string
+      - description: New User
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.SignUp'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SignUp'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.APIError'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/handler.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.APIError'
+      summary: Create an inactive user
+      tags:
+      - users
+  /users/{login}:
+    get:
+      consumes:
+      - application/json
+      description: Get a user item
+      parameters:
+      - description: mediaType
         in: query
         name: mediaType
         type: string
@@ -48,20 +109,17 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.User'
-      summary: Get a user
-      tags:
-      - users
-  /users/signup:
-    post:
-      consumes:
-      - application/json
-      description: Take json and create an inactive user
-      responses:
-        "200":
-          description: ok
+        "404":
+          description: Not Found
           schema:
-            type: string
-      summary: Create a user
+            $ref: '#/definitions/handler.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.APIError'
+      security:
+      - ApiKeyAuth: []
+      summary: Get a user
       tags:
       - users
 swagger: "2.0"
