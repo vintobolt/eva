@@ -22,6 +22,8 @@ build:
 	go build -o bin/ cmd/api/main.go
 run: build
 	./bin/main
+test:
+	go test -v ./...
 lint:
 	golangci-lint run cmd/api/main.go
 update-lint:
