@@ -21,11 +21,12 @@ type Config struct {
 		Ip              string `env:"SRV_IP" env-required:"true" env-description:"EVA server ip address"`
 		Port            string `env:"SRV_PORT" env-required:"true" env-description:"EVA server port"`
 		LogPath         string `env:"SRV_LOGPATH" env-required:"true" env-description:"EVA servers log path"`
-		ShutdownTimeout int    `env:"SRV_GRACEFUL_TIMEOUT" env-required="true" env-description:"Timeout for graceful shutdown"`
+		ShutdownTimeout int    `env:"SRV_GRACEFUL_TIMEOUT" env-required:"true" env-description:"Timeout for graceful shutdown"`
 		LogLevel        string `env:"SRV_LOGLEVEL" env-description:"Levels: Debug, Info, Warning, Error, DPanic, Panic, and Fatal."`
 		ReadTimeout     int    `env:"SRV_READ_TIMEOUT" env-description:"HTTP read timeout"`
 		WriteTimeout    int    `env:"SRV_WRITE_TIMEOUT" env-description:"HTTP write timeout"`
-		JWTSecret       string `env:"SRV_JWT_SECRET" env-default=""  env-description:"JWT secret key"`
+		JWTSecret       string `env:"SRV_JWT_SECRET" env-default:"" env-description:"JWT secret key"`
+		JWTExpirationMs int    `env:"SRV_JWT_EXPIRATION_MS" env-default:"86400000" env-description:"JWT expiration time in milliseconds"`
 	}
 }
 
