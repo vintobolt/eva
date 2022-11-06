@@ -1,6 +1,7 @@
 package models
 
 type User struct {
+	ID       string
 	Login    string
 	Passwd   string
 	Role     string
