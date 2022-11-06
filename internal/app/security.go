@@ -9,8 +9,13 @@ import (
 )
 
 var whiteListPaths = []string{
+	"/api",
+	"/api/*",
 	"/api/v1/users/signin",
 	"/api/v1/users/signup",
+	"/users/signin",
+	"/users/signup",
+	"/health",
 }
 
 func init() {
